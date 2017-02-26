@@ -1,0 +1,5 @@
+com\demeys\app\resources\AppResource.class
+com\demeys\app\DemeysAppDWApplication.class
+com\demeys\app\modules\JsonModule.class
+com\demeys\app\services\AppService.class
+com\demeys\app\DemeysAppDWConfiguration.class

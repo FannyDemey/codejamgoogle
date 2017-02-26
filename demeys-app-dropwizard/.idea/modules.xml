@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/demeys-app-dropwizard.iml" filepath="$PROJECT_DIR$/demeys-app-dropwizard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demeys-app-dropwizard-api/demeys-app-dropwizard-api.iml" filepath="$PROJECT_DIR$/demeys-app-dropwizard-api/demeys-app-dropwizard-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demeys-app-dropwizard-application/demeys-app-dropwizard-application.iml" filepath="$PROJECT_DIR$/demeys-app-dropwizard-application/demeys-app-dropwizard-application.iml" />
+    </modules>
+  </component>
+</project>
