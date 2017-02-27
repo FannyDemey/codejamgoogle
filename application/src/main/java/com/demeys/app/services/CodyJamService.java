@@ -24,52 +24,55 @@ public class CodyJamService {
         List<String> lines =fileService.getInputFileToList("input/A-small-practice.in");
         List<String> outputs = new ArrayList<>();
         for (int lineNb =1, caseNb=1; lineNb<lines.size();lineNb=lineNb+2,caseNb++) {
-            Integer nbItems = Integer.parseInt(lines.get(lineNb));
+            Long nbItems = Long.parseLong(lines.get(lineNb));
             System.out.print("nbItems"+nbItems);
 
-            List<Integer> prices = Splitter.on(" ").splitToList(lines.get(lineNb+1))
-                    .stream().map(Integer::parseInt).collect(Collectors.toList());
+            List<Long> prices = Splitter.on(" ").splitToList(lines.get(lineNb+1))
+                    .stream().map(Long::parseLong).collect(Collectors.toList());
 
-             List<Integer> nonReducedPrices = Lists.reverse(prices).stream()
+             List<Long> nonReducedPrices = Lists.reverse(prices).stream()
                     .filter(price -> this.isAStandartPrice(price,prices))
                      .collect(Collectors.toList());
-            System.out.print(nonReducedPrices.toString());
+            System.out.println("nonReducedPrices"+nonReducedPrices.toString());
 
-            List<Integer> reducedPrices = prices;
+            List<Long> reducedPrices = prices;
             reducedPrices.removeAll(nonReducedPrices);
 
              //Case doublon
-            List<Integer> toBeRemoved = new ArrayList<>();
-            if(reducedPrices.size()<nbItems){
+            List<Long> toBeRemoved = new ArrayList<>();
+            while(reducedPrices.size()<nbItems){
                 System.out.println("Trop de nonReducedPrices");
-                for(Integer next : nonReducedPrices){
-                    if(nonReducedPrices.contains(next/75*100)){
+                for(Long next : nonReducedPrices){
+                    if(nonReducedPrices.contains(next*75/100)){
                         System.out.println("price "+ next + "contient son 75");
-                        if(!toBeRemoved.contains(next/75*100)){
+                        if(!toBeRemoved.contains(next*75/100)){
                             System.out.println("pas encore en liste");
+                            toBeRemoved.add(next*75/100);
                             reducedPrices.add(next*75/100);
+                            System.out.println("reducedPrices after adding"+reducedPrices);
+
                         }
                     }
                 }
                 nonReducedPrices.removeAll(toBeRemoved);
             }
-
-            outputs.add(generateOutput(caseNb,prices));
+            Collections.sort(reducedPrices);
+            outputs.add(generateOutput(caseNb,reducedPrices));
         }
         fileService.writeListToOutputFile(outputs);
         return outputs;
     }
 
-    private String generateOutput(Integer caseNb, List<Integer> reducedPrice) {
+    private String generateOutput(int caseNb, List<Long> reducedPrice) {
         String output = "Case #"+caseNb+": "+ StringUtils.join(reducedPrice, " ");
         System.out.println(output);
         return output;
     }
 
-    private Boolean isAStandartPrice(Integer price, List<Integer> prices){
-        Integer reducedPrice = price*75/100;
+    private Boolean isAStandartPrice(Long price, List<Long> prices){
+        Long reducedPrice = price*75/100;
         if(prices.contains(price*75/100)){
-            Integer doubleReducedPrice = reducedPrice*75/100;
+            Long doubleReducedPrice = reducedPrice*75/100;
             return true;
         }
         return false;
