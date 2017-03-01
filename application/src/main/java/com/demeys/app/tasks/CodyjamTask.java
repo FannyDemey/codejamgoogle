@@ -20,7 +20,7 @@ public class CodyjamTask implements Managed {
 
     @Override
     public void start() throws Exception {
-        codyJamService.getReducedPrices();
+        codyJamService.getReducedPricesv2();
     }
 
     @Override
