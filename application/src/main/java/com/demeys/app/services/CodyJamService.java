@@ -38,7 +38,7 @@ public class CodyJamService {
             }
             outputs.add(generateOutput(caseNb, prices));
         }
-        fileService.writeListToOutputFile(outputs);
+        fileService.writeListToOutputFile(outputs,"A-large-practice.out");
         return outputs;
     }
 
@@ -81,7 +81,7 @@ public class CodyJamService {
             Collections.sort(reducedPrices);
             outputs.add(generateOutput(caseNb, reducedPrices));
         }
-        fileService.writeListToOutputFile(outputs);
+        fileService.writeListToOutputFile(outputs,"A-small-practice.out");
         return outputs;
     }
 

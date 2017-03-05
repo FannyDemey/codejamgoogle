@@ -1,8 +1,8 @@
-/Users/Fanny/Documents/codysjam/dropwizard/codejamgoogle/application/src/main/java/com/demeys/app/DemeysAppDWApplication.java
-/Users/Fanny/Documents/codysjam/dropwizard/codejamgoogle/application/src/main/java/com/demeys/app/modules/JsonModule.java
-/Users/Fanny/Documents/codysjam/dropwizard/codejamgoogle/application/src/main/java/com/demeys/app/services/AppService.java
-/Users/Fanny/Documents/codysjam/dropwizard/codejamgoogle/application/src/main/java/com/demeys/app/services/FileService.java
-/Users/Fanny/Documents/codysjam/dropwizard/codejamgoogle/application/src/main/java/com/demeys/app/resources/AppResource.java
-/Users/Fanny/Documents/codysjam/dropwizard/codejamgoogle/application/src/main/java/com/demeys/app/DemeysAppDWConfiguration.java
-/Users/Fanny/Documents/codysjam/dropwizard/codejamgoogle/application/src/main/java/com/demeys/app/tasks/CodyjamTask.java
-/Users/Fanny/Documents/codysjam/dropwizard/codejamgoogle/application/src/main/java/com/demeys/app/services/CodyJamService.java
+C:\Utilisateurs\a508708\Documents\Perso\github\codejamgoogle\application\src\main\java\com\demeys\app\modules\JsonModule.java
+C:\Utilisateurs\a508708\Documents\Perso\github\codejamgoogle\application\src\main\java\com\demeys\app\DemeysAppDWConfiguration.java
+C:\Utilisateurs\a508708\Documents\Perso\github\codejamgoogle\application\src\main\java\com\demeys\app\services\DancerService.java
+C:\Utilisateurs\a508708\Documents\Perso\github\codejamgoogle\application\src\main\java\com\demeys\app\services\FileService.java
+C:\Utilisateurs\a508708\Documents\Perso\github\codejamgoogle\application\src\main\java\com\demeys\app\services\CodyJamService.java
+C:\Utilisateurs\a508708\Documents\Perso\github\codejamgoogle\application\src\main\java\com\demeys\app\services\AppService.java
+C:\Utilisateurs\a508708\Documents\Perso\github\codejamgoogle\application\src\main\java\com\demeys\app\DemeysAppDWApplication.java
+C:\Utilisateurs\a508708\Documents\Perso\github\codejamgoogle\application\src\main\java\com\demeys\app\tasks\CodyjamTask.java

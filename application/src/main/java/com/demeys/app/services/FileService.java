@@ -1,5 +1,7 @@
 package com.demeys.app.services;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -11,15 +13,16 @@ import java.util.stream.Stream;
 /**
  * Created by Fanny on 26/02/2017.
  */
+@Slf4j
 public class FileService {
 
     public List<String> getInputFileToList(String fileName){
         try {
-            System.out.print("File to List of String");
+            log.info("Reading file named :<{}>",fileName);
             List<String> lines = Files.readAllLines(Paths.get(fileName));
             return lines;
         } catch (IOException e){
-            System.out.print("Pb reading file");
+            log.info("Pb reading file");
             return null;
         }
     }
@@ -34,9 +37,10 @@ public class FileService {
         }
     }
 
-    public void writeListToOutputFile(List<String> outputs){
+    public void writeListToOutputFile(List<String> outputs, String fileName){
         try{
-            Path outputfile = Paths.get("output/output.txt");
+            String filePath = "output/"+fileName;
+            Path outputfile = Paths.get(filePath);
             Files.write(outputfile,outputs, Charset.defaultCharset());
         } catch (IOException e){
 

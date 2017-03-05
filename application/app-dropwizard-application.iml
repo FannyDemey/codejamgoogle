@@ -77,6 +77,7 @@
     <orderEntry type="library" name="Maven: io.dropwizard:dropwizard-views-freemarker:1.0.0-rc3" level="project" />
     <orderEntry type="library" name="Maven: io.dropwizard:dropwizard-views:1.0.0-rc3" level="project" />
     <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.23" level="project" />
+    <orderEntry type="library" name="Maven: com.javaslang:javaslang:2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2:guice-bridge:2.4.0-b34" level="project" />
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-api:2.4.0-b34" level="project" />
