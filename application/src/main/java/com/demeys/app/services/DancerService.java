@@ -3,15 +3,11 @@ package com.demeys.app.services;
 import com.google.common.base.Splitter;
 import com.google.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 /**
  * Created by a508708 on 05/03/2017.
@@ -31,49 +27,61 @@ public class DancerService {
         List<String> outputs = new ArrayList<>();
         for (int lineNb = 1;lineNb < lines.size(); lineNb++) {
             log.debug("case #{}",lineNb);
-            List<Long> inputline = Splitter.on(" ").splitToList(lines.get(lineNb))
-                    .stream().map(Long::parseLong).collect(Collectors.toList());
-            Long nbDancers = inputline.get(0);
-            Long dancerK = inputline.get(1);
-            Long nbTour = inputline.get(2);
-            List<Long> dancers = LongStream.range(1,nbDancers+1).boxed().collect(Collectors.toList());
-            log.debug("dancers:"+dancers.toString());
-            //Move Dancers
-            moveDancers(dancers,nbTour);
-            //find K left & right
-            ListIterator<Long> listIterator = dancers.listIterator();
-            Long rightDancer= new Long(0);
-            Long leftDancer= new Long(0);
-            Long currentDancer;
-            while (listIterator.hasNext() && rightDancer==0){
-                currentDancer = listIterator.next();
-                if(currentDancer==dancerK){
-                    if(listIterator.previousIndex()>0){
-                        rightDancer =dancers.get(listIterator.previousIndex()-1);
-                    } else {
-                        rightDancer = dancers.get(dancers.size()-1);
-                    }
-                    if(listIterator.hasNext()){
-                        leftDancer = dancers.get(listIterator.nextIndex());
-                    } else {
-                        leftDancer = dancers.get(0);
-                    }
-
-                }
+            List<Integer> inputline = Splitter.on(" ").splitToList(lines.get(lineNb))
+                    .stream().map(Integer::parseInt).collect(Collectors.toList());
+            Integer nbDancers = inputline.get(0);
+            Integer dancerK = inputline.get(1);
+            Integer nbTour = inputline.get(2);
+            Integer rightDancer,leftDancer;
+            Integer dancerKInitialPosition = dancerK -1; //go from num dancer to index
+            Integer rightDancerInitialPosition,leftDancerInitialPosition;
+            Integer rightDancerPosition,leftDancerPosition;
+            nbTour = nbTour % nbDancers;
+            //Step 1 : Find Dancer K
+            Integer dancerKFinalPosition = (dancerKInitialPosition %2 == 0)? ((dancerKInitialPosition)+nbTour):((dancerKInitialPosition)-nbTour);
+            dancerKFinalPosition = dancerKFinalPosition % nbDancers;
+            while(dancerKFinalPosition<0){
+                dancerKFinalPosition+=nbDancers;
             }
+            //find left
+            leftDancerPosition = (dancerKFinalPosition + 1)  % nbDancers;
+            rightDancerPosition = (dancerKFinalPosition -1 ) % nbDancers;
+            if(rightDancerPosition<0) {
+                rightDancerPosition+= nbDancers;
+            }
+            log.debug("dancerKFinalPosition {}, left position {}, right position {}",dancerKFinalPosition,leftDancerPosition,rightDancerPosition);
+
+            if(dancerKInitialPosition %2 != 0){
+                rightDancerInitialPosition = (rightDancerPosition - nbTour) % nbDancers;
+                leftDancerInitialPosition = (leftDancerPosition - nbTour) % nbDancers;
+                if(rightDancerInitialPosition<0) {
+                    rightDancerInitialPosition += nbDancers;
+                }
+                if(leftDancerInitialPosition<0){
+                    leftDancerInitialPosition += nbDancers;
+                }
+            } else {
+                rightDancerInitialPosition = (rightDancerPosition + nbTour) % nbDancers;
+                leftDancerInitialPosition = (leftDancerPosition + nbTour) % nbDancers;
+            }
+
+            leftDancer = leftDancerInitialPosition +1; //go from index to num dancer
+            rightDancer = rightDancerInitialPosition +1; //go from index to num dancer
+
+            log.debug("dancer K <{}> has <{}> left position and <{}> right position ",dancerK,leftDancerPosition,rightDancerPosition);
             log.debug("dancer K <{}> has <{}> at his left and <{}> at his right",dancerK,leftDancer,rightDancer);
             outputs.add(generateOutput(lineNb,leftDancer,rightDancer));
         }
         fileService.writeListToOutputFile(outputs,"B-large-practice.out");
     }
 
-    private String generateOutput(int caseNb, Long left, Long right) {
+    private String generateOutput(int caseNb, Integer left, Integer right) {
         String output = "Case #"+caseNb+": "+left+" "+right;
         System.out.println(output);
         return output;
     }
 
-    public void moveDancers(List<Long> dancers, Long nbTour){
+    public void moveDancers(List<Integer> dancers, Integer nbTour){
         for(int i=1;i<=nbTour;i++){
             int j = 0;
             if(i%2 != 0){
@@ -81,13 +89,13 @@ public class DancerService {
 
             } else {
                 log.debug("cas PAIR");
-                Long firstDancer = dancers.get(0);
+                Integer firstDancer = dancers.get(0);
                 dancers.set(0, dancers.get(dancers.size()-1));
                 dancers.set(dancers.size()-1, firstDancer);
                 j = 1;
             }
             while(j<dancers.size()-1) {
-                Long tempDancer = dancers.get(j);
+                Integer tempDancer = dancers.get(j);
                 dancers.set(j,dancers.get(j+1));
                 dancers.set(j+1,tempDancer);
                 j=j+2;
