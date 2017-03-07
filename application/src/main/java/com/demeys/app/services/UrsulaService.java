@@ -22,7 +22,7 @@ public class UrsulaService {
 
 
     public void getNbWordsPossibleForUrsulasLangage() {
-        List<String> lines = fileService.getInputFileToList("input/B-large-practice.in");
+        List<String> lines = fileService.getInputFileToList("input/C-small-practice-2.in");
         log.debug("line.size"+lines.size());
         List<String> outputs = new ArrayList<>();
         for (int lineNb = 1;lineNb < lines.size(); lineNb++) {
@@ -35,7 +35,48 @@ public class UrsulaService {
             Integer v = inputline.get(1);
             Integer l = inputline.get(2);
             //output : nb word ( result modulo 10^9+7 (1000000007))
+            List<String> possibilities = new ArrayList<>();
+            for(int j=0;j<c;j++){
+                possibilities.add("c");
+            }
+            for(int j=0;j<v;j++){
+                possibilities.add("v");
+            }
+            log.debug("size initial {} and elements:{}",possibilities.size(),possibilities.toString());
+            int length =1;
+                while (length<l){
 
+                    List<String> initialListCopyForConsonne = new ArrayList<>();
+                    List<String> initialListCopyForVoyelle = new ArrayList<>();
+                    for(int j=0;j<c;j++){
+                        initialListCopyForConsonne.addAll(possibilities.stream().map(word -> word.concat("c")).collect(Collectors.toList()));
+                    }
+                    for(int j=0;j<v;j++){
+                        initialListCopyForVoyelle.addAll(possibilities.stream().map(word -> word.concat("v")).collect(Collectors.toList()));
+                    }
+                    possibilities.clear();
+                    possibilities.addAll(initialListCopyForConsonne);
+                    possibilities.addAll(initialListCopyForVoyelle);
+                  //  log.debug("{} possibilities : {}",possibilities.size(),possibilities.toString());
+
+                    length++;
+                }
+            possibilities = possibilities.stream().filter(word -> this.allowedword(word)).collect(Collectors.toList());
+            log.debug("{} possibilities after removing wrong words : {}",possibilities.size(),possibilities.toString());
+
+            outputs.add(generateOutput(lineNb,possibilities.size()));
         }
+        fileService.writeListToOutputFile(outputs,"C-small-practice-2.out");
+
+    }
+
+    private boolean allowedword(String word) {
+        return !word.contains("cc") && !word.endsWith("c");
+    }
+
+    private String generateOutput(int caseNb, Integer size) {
+        size = size % 1000000007;
+        String output = "Case #"+caseNb+": "+size;
+        return output;
     }
 }
