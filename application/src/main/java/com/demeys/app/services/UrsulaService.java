@@ -22,7 +22,8 @@ public class UrsulaService {
 
 
     public void getNbWordsPossibleForUrsulasLangage() {
-        List<String> lines = fileService.getInputFileToList("input/C-small-practice-2.in");
+        final String filename = "C-custom";
+        List<String> lines = fileService.getInputFileToList(filename);
         log.debug("line.size" + lines.size());
         List<String> outputs = new ArrayList<>();
         for (int lineNb = 1; lineNb < lines.size(); lineNb++) {
@@ -39,6 +40,8 @@ public class UrsulaService {
 
             List<String> possibilitiesCons = new ArrayList<>();
             List<String> possibilitiesVoy = new ArrayList<>();
+            List<String> initialListCopyForConsonne = new ArrayList<>();
+            List<String> initialListCopyForVoyelle = new ArrayList<>();
             possibilities.addAll(possibilitiesCons);
             possibilities.addAll(possibilitiesVoy);
 
@@ -50,53 +53,48 @@ public class UrsulaService {
             for (int j = 0; j < v; j++) {
                 possibilities.add("v");
             }
+            if (l <= 1) {
+                long nbWords = possibilities.stream().filter(word -> allowedword(word)).count();
+                log.debug("lineNb {}, nbWords {}", lineNb, nbWords);
+                outputs.add(generateOutput(lineNb, nbWords));
+            } else {
+                log.debug("size initial {} and elements:{}", possibilities.size(), possibilities.toString());
 
-            log.debug("size initial {} and elements:{}", possibilities.size(), possibilities.toString());
+                int length = 1;
+                // premier a avant dernier tour
+                while (length < l - 1) {
+                    initialListCopyForConsonne.addAll(possibilities.stream()
+                            .map(word -> word.concat("c"))
+                            .collect(Collectors.toList()));
+                    initialListCopyForVoyelle.addAll(possibilities.stream()
+                            .map(word -> word.concat("v"))
+                            .collect(Collectors.toList()));
 
-            int length = 1;
-            while (length < l) {
+                    possibilities.clear();
+                    possibilities.addAll(initialListCopyForConsonne);
+                    possibilities.addAll(initialListCopyForVoyelle);
+                    initialListCopyForConsonne.clear();
+                    initialListCopyForVoyelle.clear();
+                    length++;
+                }
 
-                List<String> initialListCopyForConsonne = new ArrayList<>();
-                List<String> initialListCopyForVoyelle = new ArrayList<>();
-
-                initialListCopyForConsonne.addAll(possibilities.stream()
-                        .map(word -> word.concat("c"))
-                        .collect(Collectors.toList()));
                 initialListCopyForVoyelle.addAll(possibilities.stream()
                         .map(word -> word.concat("v"))
                         .collect(Collectors.toList()));
-                possibilities.clear();
-                possibilitiesCons.clear();
-                possibilitiesVoy.clear();
 
-                possibilities.addAll(initialListCopyForConsonne);
-                possibilities.addAll(initialListCopyForVoyelle);
-                possibilitiesCons.addAll(initialListCopyForConsonne);
-                possibilitiesVoy.addAll(initialListCopyForVoyelle);
-                //  log.debug("{} possibilities : {}",possibilities.size(),possibilities.toString());
 
-                length++;
+                log.debug("initialListCopyForVoyelle {} : {}", initialListCopyForVoyelle.size(), initialListCopyForVoyelle);
+                initialListCopyForVoyelle = initialListCopyForVoyelle.stream().filter(word -> allowedword(word)).collect(Collectors.toList());
+                log.debug("initialListCopyForVoyelle {} : {}", initialListCopyForVoyelle.size(), initialListCopyForVoyelle);
+                long nbWords = initialListCopyForVoyelle.size() * v;
+
+                log.debug("lineNb {}, nbWords {}", lineNb, nbWords);
+
+                outputs.add(generateOutput(lineNb, nbWords));
             }
-/*
-        log.debug("possibilities {}",possibilities);
-        log.debug("possibilitiesCons {}, possibilitiesVoy {}", possibilitiesCons.size(), possibilitiesVoy.size());
-        log.debug("possibilitiesCons all to be removed {}",possibilitiesCons);
-*/
 
-            long nbWords;
-            if(l>1){
-             //   log.debug("possibilitiesVoy before filter : {}",possibilitiesVoy);
-                possibilitiesVoy = possibilitiesVoy.stream().filter(word -> this.allowedword(word)).collect(Collectors.toList());
-            //    log.debug("possibilitiesVoy after : {}",possibilitiesVoy);
-                nbWords = possibilitiesVoy.size() * v;
-            } else {
-                nbWords = possibilities.stream().filter(word -> this.allowedword(word)).count();
-            }
-            log.debug("lineNb {}, nbWords {}",lineNb,nbWords);
-
-            outputs.add(generateOutput(lineNb, nbWords));
         }
-        fileService.writeListToOutputFile(outputs, "C-small-practice-2.out");
+        fileService.writeListToOutputFile(outputs, filename);
 
     }
 

@@ -18,8 +18,9 @@ public class FileService {
 
     public List<String> getInputFileToList(String fileName){
         try {
-            log.info("Reading file named :<{}>",fileName);
-            List<String> lines = Files.readAllLines(Paths.get(fileName));
+            String path = "input/"+fileName+".in";
+            log.info("Reading file named :<{}>",path);
+            List<String> lines = Files.readAllLines(Paths.get(path));
             return lines;
         } catch (IOException e){
             log.info("Pb reading file");
@@ -39,7 +40,7 @@ public class FileService {
 
     public void writeListToOutputFile(List<String> outputs, String fileName){
         try{
-            String filePath = "output/"+fileName;
+            String filePath = "output/"+fileName + ".out";
             Path outputfile = Paths.get(filePath);
             Files.write(outputfile,outputs, Charset.defaultCharset());
         } catch (IOException e){
