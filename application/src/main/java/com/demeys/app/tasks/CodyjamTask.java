@@ -1,7 +1,10 @@
 package com.demeys.app.tasks;
 
 import com.demeys.app.services.CodyJamService;
+import com.demeys.app.services.ConcertService;
 import com.demeys.app.services.DancerService;
+import com.demeys.app.services.FirstExService;
+import com.demeys.app.services.IOPrinterService;
 import com.demeys.app.services.PasswordService;
 import com.demeys.app.services.UrsulaService;
 import com.google.inject.Inject;
@@ -15,17 +18,17 @@ import lombok.extern.slf4j.Slf4j;
 public class CodyjamTask implements Managed {
 
     private final CodyJamService codyJamService;
-    private final DancerService dancerService;
-    private final UrsulaService ursulaService;
-    private final PasswordService passwordService;
+    private final IOPrinterService ioPrinterService;
+    private final ConcertService concertService;
+    private final FirstExService firstExService;
 
     @Inject
-    public CodyjamTask(CodyJamService codyJamService,DancerService dancerService, UrsulaService ursulaService,
-                       PasswordService passwordService) {
+    public CodyjamTask(CodyJamService codyJamService,IOPrinterService ioPrinterService, ConcertService concertService,
+                       FirstExService firstExService) {
         this.codyJamService = codyJamService;
-        this.dancerService = dancerService;
-        this.ursulaService = ursulaService;
-        this.passwordService = passwordService;
+        this.ioPrinterService = ioPrinterService;
+        this.concertService = concertService;
+        this.firstExService = firstExService;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class CodyjamTask implements Managed {
        //  codyJamService.getReducedPricesv2();
       //  dancerService.getTheNeighbourgsOfK();
      //   ursulaService.getNbWordsPossibleForUrsulasLangage();
-        passwordService.generateLettersMessage();
+        ioPrinterService.TODOmethodName();
     }
 
     @Override
