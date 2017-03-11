@@ -9,7 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="app-dropwizard-api" />
+    <orderEntry type="library" name="Maven: demeys:app-dropwizard-api:0.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.7.4" level="project" />
     <orderEntry type="library" name="Maven: io.dropwizard:dropwizard-validation:1.0.0-rc3" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator:5.2.4.Final" level="project" />
